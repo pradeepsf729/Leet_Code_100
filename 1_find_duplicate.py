@@ -25,10 +25,13 @@ def find_dup_1(items):
         items.sort()
     except TypeError as e:
         return False # different types.
+    firstItem = True
     cur_item = None
     for i in items:
-        if not cur_item:
+        if firstItem:
             cur_item = i
+            firstItem = False
+            continue
         else:
             try:
                 if i == cur_item:
@@ -39,10 +42,10 @@ def find_dup_1(items):
                 return False # different types.
     return False
 
+find_dup_1([0,4,5,0,3,6])
 # Testing
 # >pytest <file name>
 
-"""
 test_cases = [
     # Duplicates
     ([1, 2, 3, 1], True),
@@ -80,6 +83,7 @@ test_cases = [
     ([5, 5, 5, 5, 5], True),
     ([10, 20, 30, 10, 40], True),
     (["apple", "banana", "apple"], True),
+    ([0,4,5,0,3,6], True),
     ([1, 1.0], True),  # 1 == 1.0 in Python
 
     # No duplicates
@@ -105,4 +109,3 @@ def test_large_input_with_duplicate_1():
     input_array = list(range(10_000_000)) + [1]
     assert find_dup_1(input_array) is True
 
-"""
